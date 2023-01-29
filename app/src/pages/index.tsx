@@ -1,28 +1,24 @@
-import React from "react";
+import React, {Suspense} from "react";
 import Head from 'next/head';
 import {Canvas} from "@react-three/fiber";
 
-import DirectionalLight from "@/components/DirectionalLight";
-import AmbientLight from "@/components/AmbientLight";
-import OrbitControls from "@/components/OrbitControls";
-import SceneBackground from "@/components/SceneBackground";
-import Plane from "@/components/Plane";
-import Box from "@/components/Box";
-import {cookies} from "next/headers";
-// import Draggable from "@/components/Draggable";
+import DirectionalLight from "@/features/core/DirectionalLight";
+import AmbientLight from "@/features/core/AmbientLight";
+import OrbitControls from "@/features/core/OrbitControls";
+import Draggable from "@/features/core/Draggable";
+
+import SceneBackground from "@/features/playground/SceneBackground";
+import Plane from "@/features/playground/Plane";
+import Box from "@/features/playground/Box";
+import RocketModel from "@/features/playground/RocketModel";
+import AdventureCoreModel from "@/features/playground/AdventureCoreModel";
+import ZombieModel from "@/features/playground/ZombieModel";
+
+import {generateBoxCoordinates} from "@/utils/utils";
 
 
 export default function Home() {
-    function generateBoxCoordinates(){
-        const coords: [x:number, y:number, z:number][] = [];
-        for (let x = -8; x < 8; x++) {
-            for (let y = -8; y < 8; y++) {
-                coords.push([Math.random() + x * 5, Math.random() * 4.0 + 2.0, Math.random() + y * 5]);
-            }
-        }
-        return coords;
-    }
-    const boxCoords = generateBoxCoordinates();
+    // const boxCoords = generateBoxCoordinates();
 
     return (
         <>
@@ -47,9 +43,18 @@ export default function Home() {
                 <SceneBackground/>
                 <Plane/>
 
-                {boxCoords.map((pos, ind) =>
-                    <Box key={ind} position={pos}/>
-                )}
+                {/*{boxCoords.map((pos, ind) =>*/}
+                {/*    <Box key={ind} position={pos}/>*/}
+                {/*)}*/}
+                <Suspense fallback={null}>
+                    <RocketModel scale={[2, 2, 2]}/>
+                    {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
+                    {/*<ZombieModel/>*/}
+                </Suspense>
+                {/*<BaseGLTFModel path="models/adventure_core/scene.gltf"/>*/}
+
+                {/*<BaseGLTFModel path="models/rocket_model/Rocket_Ship_01.gltf"/>*/}
+                {/*<BaseGLTFModel path="models/portal_gun/scene.gltf"/>*/}
 
                 {/*<Draggable>*/}
                 {/*    <Suspense fallback={null}>*/}
