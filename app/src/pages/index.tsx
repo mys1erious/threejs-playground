@@ -2,19 +2,18 @@ import React, {Suspense} from "react";
 import Head from 'next/head';
 import {Canvas} from "@react-three/fiber";
 
-import DirectionalLight from "@/features/core/DirectionalLight";
-import AmbientLight from "@/features/core/AmbientLight";
-import OrbitControls from "@/features/core/OrbitControls";
-import Draggable from "@/features/core/Draggable";
+import DirectionalLight from "@/features/core/components/DirectionalLight";
+import AmbientLight from "@/features/core/components/AmbientLight";
+import OrbitControls from "@/features/core/components/OrbitControls";
+import Draggable from "@/features/core/components/Draggable";
+import {generateBoxCoordinates} from "@/features/core/utils";
 
-import SceneBackground from "@/features/playground/SceneBackground";
-import Plane from "@/features/playground/Plane";
-import Box from "@/features/playground/Box";
-import RocketModel from "@/features/playground/RocketModel";
-import AdventureCoreModel from "@/features/playground/AdventureCoreModel";
-import ZombieModel from "@/features/playground/ZombieModel";
-
-import {generateBoxCoordinates} from "@/utils/utils";
+import SceneBackground from "@/features/playground/components/SceneBackground";
+import Plane from "@/features/playground/components/Plane";
+import Box from "@/features/playground/components/Box";
+import RocketModel from "@/features/playground/components/RocketModel";
+import AdventureCoreModel from "@/features/playground/components/AdventureCoreModel";
+import ZombieModel from "@/features/playground/components/ZombieModel";
 
 
 export default function Home() {
