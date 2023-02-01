@@ -49,14 +49,10 @@ export default function Home() {
                 {/*    <Box key={ind} position={pos}/>*/}
                 {/*)}*/}
                 <Suspense fallback={null}>
-                    <RocketModel scale={[2, 2, 2]} position={[0, 140, 0]}/>
+                    <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
+                    <ZombieModel/>
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
-                    {/*<ZombieModel/>*/}
                 </Suspense>
-                {/*<BaseGLTFModel path="models/adventure_core/scene.gltf"/>*/}
-
-                {/*<BaseGLTFModel path="models/rocket_model/Rocket_Ship_01.gltf"/>*/}
-                {/*<BaseGLTFModel path="models/portal_gun/scene.gltf"/>*/}
 
                 {/*<Draggable>*/}
                 {/*    <Suspense fallback={null}>*/}
