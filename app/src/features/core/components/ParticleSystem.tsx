@@ -1,8 +1,9 @@
 import React, {useRef} from "react";
 import {
+    AddEquation,
     AdditiveBlending,
-    BufferGeometry, Color,
-    Float32BufferAttribute,
+    BufferGeometry, Color, CustomBlending,
+    Float32BufferAttribute, OneFactor, OneMinusSrcAlphaFactor,
     ShaderMaterial,
     TextureLoader,
     Vector3
@@ -10,16 +11,19 @@ import {
 import {useFrame, useThree} from "@react-three/fiber";
 
 
+// Finish shaders to combine Additive and Alpha blending
 // Vertex Shader
 const _VS = `
 uniform float pointMultiplier;
 
 attribute float size;
 attribute float angle;
+attribute float blend;
 attribute vec4 colour;
 
 varying vec4 vColour;
 varying vec2 vAngle;
+varying float vBlend;
 
 
 void main() {
@@ -29,7 +33,8 @@ void main() {
     gl_PointSize = size * pointMultiplier / gl_Position.w;
        
     vAngle = vec2(cos(angle), sin(angle));
-    vColour = colour, 1.0;
+    vColour = colour;
+    vBlend = blend;
 }`;
 
 // Fragment Shader
@@ -38,10 +43,13 @@ uniform sampler2D diffuseTexture;
 
 varying vec4 vColour;
 varying vec2 vAngle;
+varying float vBlend;
 
 void main() {
     vec2 coords = (gl_PointCoord - 0.5) * mat2(vAngle.x, vAngle.y, -vAngle.y, vAngle.x) + 0.5;
     gl_FragColor = texture2D(diffuseTexture, coords) * vColour;
+    //gl_FragColor.xyz *= gl_FragColor.w;
+    //gl_FragColor.w *= vBlend;
 }`;
 
 
@@ -86,7 +94,8 @@ type Particle = {
     alpha: number,
     life: number,
     rotation: number,
-    velocity: Vector3
+    velocity: Vector3,
+    blend: number
 };
 
 
@@ -110,7 +119,11 @@ const ParticleSystem = () => {
         uniforms: uniforms,
         vertexShader: _VS,
         fragmentShader: _FS,
-        blending: AdditiveBlending,
+        // blending: AdditiveBlending,
+        blending: CustomBlending,
+        blendEquation: AddEquation,
+        blendSrc: OneFactor,
+        blendDst: OneMinusSrcAlphaFactor,
         depthTest: true,
         depthWrite: false,
         transparent: true,
@@ -124,6 +137,7 @@ const ParticleSystem = () => {
     geometry.setAttribute('size', new Float32BufferAttribute([], 1));
     geometry.setAttribute('colour', new Float32BufferAttribute([], 4));
     geometry.setAttribute('angle', new Float32BufferAttribute([], 1));
+    geometry.setAttribute('blend', new Float32BufferAttribute([], 1));
 
     const alphaSpline = new LinearSpline((t: any, a: any, b: any) => {
         return a + t * (b - a);
@@ -165,7 +179,8 @@ const ParticleSystem = () => {
                 alpha: 1.0,
                 life: 5.0,
                 rotation: Math.random() * 2.0 * Math.PI,
-                velocity: new Vector3(0, -15, 0)
+                velocity: new Vector3(0, -15, 0),
+                blend: 0.0
             });
         }
         // particles.push({
@@ -187,23 +202,27 @@ const ParticleSystem = () => {
         const sizes = [];
         const colours = [];
         const angles = [];
+        const blends = [];
 
         for (let p of particles) {
             positions.push(p.position.x, p.position.y, p.position.z);
             sizes.push(p.currentSize);
             colours.push(p.colour.r, p.colour.g, p.colour.b, p.alpha);
             angles.push(p.rotation);
+            blends.push(p.blend);
         }
 
         geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
         geometry.setAttribute('size', new Float32BufferAttribute(sizes, 1));
         geometry.setAttribute('colour', new Float32BufferAttribute(colours, 4));
         geometry.setAttribute('angle', new Float32BufferAttribute(angles, 1));
+        geometry.setAttribute('blend', new Float32BufferAttribute(blends, 1));
 
         geometry.attributes.position.needsUpdate = true;
         geometry.attributes.size.needsUpdate = true;
         geometry.attributes.colour.needsUpdate = true;
         geometry.attributes.angle.needsUpdate = true;
+        geometry.attributes.blend.needsUpdate = true;
     };
 
     const _updateParticles = (timeElapsed: number) => {

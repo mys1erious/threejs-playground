@@ -49,7 +49,7 @@ export default function Home() {
                 {/*    <Box key={ind} position={pos}/>*/}
                 {/*)}*/}
                 <Suspense fallback={null}>
-                    <RocketModel scale={[2, 2, 2]} position={[0, 80, 0]}/>
+                    <RocketModel scale={[2, 2, 2]} position={[0, 140, 0]}/>
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
                     {/*<ZombieModel/>*/}
                 </Suspense>
