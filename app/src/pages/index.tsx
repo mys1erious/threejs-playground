@@ -6,7 +6,7 @@ import DirectionalLight from "@/features/core/components/DirectionalLight";
 import AmbientLight from "@/features/core/components/AmbientLight";
 import OrbitControls from "@/features/core/components/OrbitControls";
 import Draggable from "@/features/core/components/Draggable";
-import {generateBoxCoordinates} from "@/features/core/utils";
+import {generateBoxCoordinates} from "@/features/core//utils/utils";
 
 import SceneBackground from "@/features/playground/components/SceneBackground";
 import Plane from "@/features/playground/components/Plane";
@@ -14,6 +14,8 @@ import Box from "@/features/playground/components/Box";
 import RocketModel from "@/features/playground/components/RocketModel";
 import AdventureCoreModel from "@/features/playground/components/AdventureCoreModel";
 import ZombieModel from "@/features/playground/components/ZombieModel";
+import ParticleSystem from "@/features/core/components/ParticleSystem";
+import {Stats} from "@react-three/drei";
 
 
 export default function Home() {
@@ -39,6 +41,7 @@ export default function Home() {
                 <DirectionalLight/>
                 <AmbientLight/>
                 <OrbitControls/>
+
                 <SceneBackground/>
                 <Plane/>
 
@@ -46,7 +49,7 @@ export default function Home() {
                 {/*    <Box key={ind} position={pos}/>*/}
                 {/*)}*/}
                 <Suspense fallback={null}>
-                    <RocketModel scale={[2, 2, 2]}/>
+                    <RocketModel scale={[2, 2, 2]} position={[0, 80, 0]}/>
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
                     {/*<ZombieModel/>*/}
                 </Suspense>
@@ -60,6 +63,8 @@ export default function Home() {
                 {/*        <Box rotateX={3} rotateY={0.2}/>*/}
                 {/*    </Suspense>*/}
                 {/*</Draggable>*/}
+
+                <Stats />
             </Canvas>
         </main>
         </>
