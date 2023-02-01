@@ -1,7 +1,6 @@
 import React, {useRef} from "react";
 import {
     AddEquation,
-    AdditiveBlending,
     BufferGeometry, Color, CustomBlending,
     Float32BufferAttribute, OneFactor, OneMinusSrcAlphaFactor,
     ShaderMaterial,
