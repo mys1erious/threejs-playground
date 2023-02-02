@@ -4,15 +4,17 @@ import {TextureLoader} from "three";
 
 
 type BoxProps = {
-    position: [x:number, y:number, z:number]
+    position?: [x:number, y:number, z:number],
+    scale?: [x:number, y:number, z:number],
 };
 
 
-const Box = ({position}: BoxProps) => {
+const Box = (props: BoxProps) => {
     const texture = useLoader(TextureLoader, 'images/brick_wall_texture.jpg');
 
+
     return (
-        <mesh position={position}
+        <mesh {...props}
               castShadow={true}
               receiveShadow={true}
         >

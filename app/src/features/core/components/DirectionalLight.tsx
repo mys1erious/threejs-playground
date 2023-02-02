@@ -3,9 +3,9 @@ import React from "react";
 
 const DirectionalLight = () => {
     return (
+        <group position={[150, 300,-30]}>
         <directionalLight
             color="white" intensity={1}
-            position={[100, 100, 100]}
             target-position={[0, 0, 0]}
             castShadow={true}
             shadow-mapSize-width={2048}
@@ -18,6 +18,7 @@ const DirectionalLight = () => {
                 top={200} bottom={-200}
             />
         </directionalLight>
+        </group>
     )
 };
 

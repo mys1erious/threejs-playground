@@ -3,7 +3,7 @@ import React from "react";
 
 const AmbientLight = () => {
     return (
-        <ambientLight color="#101010"/>
+        <ambientLight color="#FFFFFF" intensity={0.6}/>
     )
 };
 

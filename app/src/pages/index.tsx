@@ -16,10 +16,13 @@ import AdventureCoreModel from "@/features/playground/components/AdventureCoreMo
 import ZombieModel from "@/features/playground/components/ZombieModel";
 import ParticleSystem from "@/features/core/components/ParticleSystem";
 import {Stats} from "@react-three/drei";
+import {Vector3} from "three";
+import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
 
 
 export default function Home() {
     // const boxCoords = generateBoxCoordinates();
+    RectAreaLightUniformsLib.init();
 
     return (
         <>
@@ -38,10 +41,35 @@ export default function Home() {
                     far: 1000.0,
                     position: [75, 20, 0]
                 }}>
-                <DirectionalLight/>
-                <AmbientLight/>
-                <OrbitControls/>
 
+                {/* Just adds additional Light to the scene */}
+                <AmbientLight/>
+
+                {/* Different Colors for Top and Bottom */}
+                {/*<hemisphereLight color="#FFFF80" groundColor="#4040FF" intensity={1.0}/>*/}
+
+                {/* For Portals, Wall light? */}
+                {/*<rectAreaLight color="#FFFFFF" intensity={1.0}*/}
+                {/*               width={20.0} height={20.0}*/}
+                {/*               position={[0, 10, 0]}/>*/}
+
+                {/* Main source of Light(Sun)... */}
+                <DirectionalLight/>
+
+                {/*<mesh position={[0, 40, 0]} scale={[2, 2, 2]}>*/}
+                {/*    <Box />*/}
+                {/*     For lamps, explosions, ... . Dont have a specific direction */}
+                {/*    <pointLight color="#FFFFFF" intensity={1.0} distance={100} position={[0, -2, 0]}/>*/}
+                {/*</mesh>*/}
+
+                {/* Have specific pos and direction (like a flashlight) */}
+                {/*<spotLight color="#FFFFFF" intensity={1.0}*/}
+                {/*           distance={2000.0} angle={Math.PI / 2.0}*/}
+                {/*           penumbra={0.5} decay={0.3}*/}
+                {/*           position={[5, 12, 0]} target-position={[-1, 0, 0]} />*/}
+
+
+                <OrbitControls/>
                 <SceneBackground/>
                 <Plane/>
 
