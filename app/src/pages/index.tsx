@@ -21,8 +21,8 @@ import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightU
 
 
 export default function Home() {
-    // const boxCoords = generateBoxCoordinates();
-    RectAreaLightUniformsLib.init();
+    const boxCoords = generateBoxCoordinates();
+    // RectAreaLightUniformsLib.init();
 
     return (
         <>
@@ -73,14 +73,15 @@ export default function Home() {
                 <SceneBackground/>
                 <Plane/>
 
-                {/*{boxCoords.map((pos, ind) =>*/}
-                {/*    <Box key={ind} position={pos}/>*/}
-                {/*)}*/}
+                {boxCoords.map((pos, ind) =>
+                    <Box key={ind} position={pos}/>
+                )}
                 <Suspense fallback={null}>
                     <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
                     <ZombieModel/>
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
                 </Suspense>
+                <Box position={[20, 10, 0]} scale={[2, 2, 2]}/>
 
                 {/*<Draggable>*/}
                 {/*    <Suspense fallback={null}>*/}

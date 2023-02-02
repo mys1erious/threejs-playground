@@ -58,6 +58,10 @@ export default function ZombieModel() {
 
     const groupRef = useRef();
     const model = useFBX(MODEL_PATH);
+    // model.children.forEach((mesh, i) => {
+    //     mesh.castShadow = true;
+    //     mesh.receiveShadow = true;
+    // })
 
     const idleAnimation = useFBX(IDLE_ANIM_PATH);
     idleAnimation.animations[0].name = 'idle';
