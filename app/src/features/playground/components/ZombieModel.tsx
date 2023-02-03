@@ -146,7 +146,7 @@ export default function ZombieModel() {
                        scale={[0.1, 0.1, 0.1]}
                 // onClick={onClick}
             />
-            <ThirdPersonCamera camera={camera} target={model}/>
+            {/*<ThirdPersonCamera camera={camera} target={model}/>*/}
         </group>
     );
 

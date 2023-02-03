@@ -20,6 +20,7 @@ import {Vector3} from "three";
 import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
 import UI3D from "@/features/core/components/UI3D";
 import PostProcessing from "@/features/core/components/PostProcessing";
+import ShadersTest from "@/features/core/components/ShadersTest";
 
 
 export default function Home() {
@@ -74,16 +75,17 @@ export default function Home() {
                 <SceneBackground/>
                 <Plane/>
 
-                {boxCoords.map((pos, ind) =>
-                    <Box key={ind} position={pos}/>
-                )}
+                {/*{boxCoords.map((pos, ind) =>*/}
+                {/*    <Box key={ind} position={pos}/>*/}
+                {/*)}*/}
                 <Suspense fallback={null}>
                     <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
-                    <ZombieModel/>
+                    {/*<ZombieModel/>*/}
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
                 </Suspense>
                 <Box position={[20, 10, 0]} scale={[2, 2, 2]}/>
 
+                {/*<ShadersTest/>*/}
                 {/*<Draggable>*/}
                 {/*    <Suspense fallback={null}>*/}
                 {/*        <Box rotateX={3} rotateY={0.2}/>*/}
