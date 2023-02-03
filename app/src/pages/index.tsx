@@ -19,7 +19,7 @@ import {Stats} from "@react-three/drei";
 import {Vector3} from "three";
 import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
 import UI3D from "@/features/core/components/UI3D";
-import ThirdPersonCamera from "@/features/core/components/ThirdPersonCamera";
+import PostProcessing from "@/features/core/components/PostProcessing";
 
 
 export default function Home() {
@@ -92,6 +92,7 @@ export default function Home() {
 
                 <UI3D />
                 <Stats />
+                {/*<PostProcessing/>*/}
             </Canvas>
         </main>
         </>
