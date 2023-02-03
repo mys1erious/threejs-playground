@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, {Suspense, useRef} from "react";
 import Head from 'next/head';
 import {Canvas} from "@react-three/fiber";
 
@@ -18,6 +18,8 @@ import ParticleSystem from "@/features/core/components/ParticleSystem";
 import {Stats} from "@react-three/drei";
 import {Vector3} from "three";
 import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
+import UI3D from "@/features/core/components/UI3D";
+import ThirdPersonCamera from "@/features/core/components/ThirdPersonCamera";
 
 
 export default function Home() {
@@ -39,9 +41,8 @@ export default function Home() {
                     aspect: 1920/1080,
                     near: 1.0,
                     far: 1000.0,
-                    position: [75, 20, 0]
+                    position: [-10, 32, -50]
                 }}>
-
                 {/* Just adds additional Light to the scene */}
                 <AmbientLight/>
 
@@ -89,6 +90,7 @@ export default function Home() {
                 {/*    </Suspense>*/}
                 {/*</Draggable>*/}
 
+                <UI3D />
                 <Stats />
             </Canvas>
         </main>

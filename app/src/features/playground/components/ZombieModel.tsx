@@ -1,11 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import {useFBX, useAnimations} from "@react-three/drei";
-import {useFrame} from "@react-three/fiber";
+import {useFrame, useThree} from "@react-three/fiber";
 import {Quaternion, Vector3} from "three";
 import {
     BasicCharacterControllerInput,
     CharacterFSM
 } from "@/features/core/components/BasicCharacterController";
+import ThirdPersonCamera from "@/features/core/components/ThirdPersonCamera";
 
 
 const DIR_PATH = 'models/zombie/';
@@ -19,49 +20,9 @@ const HIPHOP_ANIM_PATH = DIR_PATH + 'hiphop.fbx';
 
 // Rework to look normally ;d
 export default function ZombieModel() {
-    // const idleAnimation = useFBX(IDLE_ANIM_PATH);
-    // idleAnimation.animations[0].name = 'idle';
-    // const danceAnimation = useFBX(DANCE_ANIM_PATH);
-    // danceAnimation.animations[0].name = 'dance';
-    // const runAnimation = useFBX(RUN_ANIM_PATH);
-    // runAnimation.animations[0].name = 'run';
-    // const animations = [
-    //     idleAnimation.animations[0],
-    //     danceAnimation.animations[0],
-    //     runAnimation.animations[0]
-    // ];
-    //
-    // const [curAnimation, setCurAnimation] = useState(idleAnimation.animations[0].name);
-    // const {actions} = useAnimations(animations, groupRef);
-    //
-    // useEffect(() => {
-    //     actions['idle']?.play();
-    // });
-    //
-    // const onClick = () => {
-    //     if (curAnimation == 'idle') {
-    //         actions['idle']?.stop();
-    //         actions['dance']?.play();
-    //         setCurAnimation('dance');
-    //     }
-    //     else if (curAnimation == 'dance') {
-    //         actions['dance']?.stop();
-    //         actions['run']?.play();
-    //         setCurAnimation('run');
-    //     }
-    //     else if (curAnimation == 'run') {
-    //         actions['run']?.stop();
-    //         actions['dance']?.play();
-    //         setCurAnimation('dance');
-    //     }
-    // }
-
+    const {camera} = useThree();
     const groupRef = useRef();
     const model = useFBX(MODEL_PATH);
-    // model.children.forEach((mesh, i) => {
-    //     mesh.castShadow = true;
-    //     mesh.receiveShadow = true;
-    // })
 
     const idleAnimation = useFBX(IDLE_ANIM_PATH);
     idleAnimation.animations[0].name = 'idle';
@@ -126,7 +87,7 @@ export default function ZombieModel() {
 
         const acc = _acceleration.clone();
         if (input._keys.shift) {
-            acc.multiplyScalar(2.0);
+            acc.multiplyScalar(3.0);
         }
 
         // if (fsm._currentState.Name == 'dance') {
@@ -179,14 +140,17 @@ export default function ZombieModel() {
 
     if (!model) return <mesh></mesh>
 
-    return <primitive ref={groupRef} object={model}
-                      scale={[0.1, 0.1, 0.1]}
-                      // onClick={onClick}
-    />;
+    return (
+        <group>
+            <primitive ref={groupRef} object={model}
+                       scale={[0.1, 0.1, 0.1]}
+                // onClick={onClick}
+            />
+            <ThirdPersonCamera camera={camera} target={model}/>
+        </group>
+    );
+
 };
 
 
 useFBX.preload(MODEL_PATH);
-useFBX.preload(IDLE_ANIM_PATH);
-useFBX.preload(WALK_ANIM_PATH);
-useFBX.preload(RUN_ANIM_PATH);
