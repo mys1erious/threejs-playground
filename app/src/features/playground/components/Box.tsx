@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useRef} from "react";
 import {useLoader} from "@react-three/fiber";
-import {TextureLoader} from "three";
+import {BoxGeometry, TextureLoader} from "three";
+import {useBox} from "@react-three/cannon";
 
 
 type BoxProps = {
@@ -11,19 +12,19 @@ type BoxProps = {
 };
 
 
-const Box = ({position, scale, onClick, color='#808080'}: BoxProps) => {
+// const Box = ({position, scale, onClick, color='#808080'}: BoxProps) => {
+const Box = (props: any) => {
+    const [boxRef]: any = useBox(() => ({
+        args: props.args,
+        mass: 1,
+        position: props.position,
+    }));
+
     const texture = useLoader(TextureLoader, 'images/brick_wall_texture.jpg');
-
-
     return (
-        <mesh position={position}
-              scale={scale}
-              castShadow={true}
-              receiveShadow={true}
-              onClick={onClick}
-        >
-            <boxGeometry args={[2, 2, 2]}/>
-            <meshPhysicalMaterial map={texture} color={color}/>
+        <mesh ref={boxRef}>
+            <boxGeometry args={props.args}/>
+            <meshPhysicalMaterial map={texture} color={props.color}/>
         </mesh>
     );
 }

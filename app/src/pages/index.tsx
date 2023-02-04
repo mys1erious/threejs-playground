@@ -22,6 +22,7 @@ import UI3D from "@/features/core/components/UI3D";
 import PostProcessing from "@/features/core/components/PostProcessing";
 import ShadersTest from "@/features/core/components/ShadersTest";
 import Fog from "@/features/core/components/Fog";
+import {Physics} from "@react-three/cannon";
 
 
 export default function Home() {
@@ -44,7 +45,9 @@ export default function Home() {
                     near: 1.0,
                     far: 1000.0,
                     position: [-10, 32, -50]
-                }}>
+                }}
+            >
+            <Physics>
                 {/* Just adds additional Light to the scene */}
                 <AmbientLight/>
 
@@ -75,17 +78,18 @@ export default function Home() {
                 <OrbitControls/>
                 <SceneBackground/>
                 <Plane/>
-                <Fog/>
+                {/*<Fog/>*/}
 
-                {boxCoords.map((pos, ind) =>
-                    <Box key={ind} position={pos}/>
-                )}
+                {/*{boxCoords.map((pos, ind) =>*/}
+                {/*    <Box key={ind} position={pos}/>*/}
+                {/*)}*/}
                 <Suspense fallback={null}>
                     <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
                     {/*<ZombieModel/>*/}
                     {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
                 </Suspense>
-                <Box position={[20, 10, 0]} scale={[2, 2, 2]}/>
+
+                <Box position={[0, 10, 0]} args={[5, 2, 2]}/>
 
                 {/*<ShadersTest/>*/}
                 {/*<Draggable>*/}
@@ -97,6 +101,7 @@ export default function Home() {
                 <UI3D />
                 <Stats />
                 {/*<PostProcessing/>*/}
+            </Physics>
             </Canvas>
         </main>
         </>
