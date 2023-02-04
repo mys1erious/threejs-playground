@@ -21,6 +21,7 @@ import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightU
 import UI3D from "@/features/core/components/UI3D";
 import PostProcessing from "@/features/core/components/PostProcessing";
 import ShadersTest from "@/features/core/components/ShadersTest";
+import Fog from "@/features/core/components/Fog";
 
 
 export default function Home() {
@@ -74,10 +75,11 @@ export default function Home() {
                 <OrbitControls/>
                 <SceneBackground/>
                 <Plane/>
+                <Fog/>
 
-                {/*{boxCoords.map((pos, ind) =>*/}
-                {/*    <Box key={ind} position={pos}/>*/}
-                {/*)}*/}
+                {boxCoords.map((pos, ind) =>
+                    <Box key={ind} position={pos}/>
+                )}
                 <Suspense fallback={null}>
                     <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
                     {/*<ZombieModel/>*/}

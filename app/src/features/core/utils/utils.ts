@@ -1,7 +1,7 @@
 export function generateBoxCoordinates(){
     const coords: [x:number, y:number, z:number][] = [];
-    const rows = 8;
-    const cols = 8;
+    const rows = 40;
+    const cols = 40;
     const xSpace = 2;
     const ySpace = 2;
     for (let x = -rows; x < rows; x+=xSpace) {
