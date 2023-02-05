@@ -3,7 +3,7 @@ import Box from "@/features/playground/components/Box";
 import {useThree} from "@react-three/fiber";
 
 
-const UI3D = () => {
+const LogicTestingSpace = () => {
     const {camera} = useThree();
 
     const cameraBoxOnClick = () => {
@@ -19,4 +19,4 @@ const UI3D = () => {
 };
 
 
-export default UI3D;
+export default LogicTestingSpace;

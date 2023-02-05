@@ -5,3 +5,8 @@
 body {
     margin: 0;
 }
+
+
+.crosshair-translate3d {
+    transform: translate3d(-50%, -50%, 0);
+}

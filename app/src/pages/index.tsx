@@ -16,13 +16,18 @@ import AdventureCoreModel from "@/features/playground/components/AdventureCoreMo
 import ZombieModel from "@/features/playground/components/ZombieModel";
 import ParticleSystem from "@/features/core/components/ParticleSystem";
 import {Stats} from "@react-three/drei";
-import {Vector3} from "three";
+import {OrthographicCamera, Scene, Vector3} from "three";
 import {RectAreaLightUniformsLib} from "three/examples/jsm/lights/RectAreaLightUniformsLib";
-import UI3D from "@/features/core/components/UI3D";
+import LogicTestingSpace from "@/features/core/components/LogicTestingSpace";
 import PostProcessing from "@/features/core/components/PostProcessing";
 import ShadersTest from "@/features/core/components/ShadersTest";
 import Fog from "@/features/core/components/Fog";
 import {Physics} from "@react-three/cannon";
+import FirstPersonCamera from "@/features/core/components/FirstPersonCamera";
+import UI from "@/features/playground/components/UI";
+
+
+const aspect = 1920/1080;
 
 
 export default function Home() {
@@ -37,73 +42,73 @@ export default function Home() {
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </Head>
         <main className="w-11/12 h-screen"> {/* change to w-screen */}
+            <UI/>
             <Canvas
                 shadows={true}
                 camera={{
                     fov: 60,
-                    aspect: 1920/1080,
+                    aspect: aspect,
                     near: 1.0,
                     far: 1000.0,
                     position: [-10, 32, -50]
-                }}
-            >
-            <Physics>
-                {/* Just adds additional Light to the scene */}
-                <AmbientLight/>
-
-                {/* Different Colors for Top and Bottom */}
-                {/*<hemisphereLight color="#FFFF80" groundColor="#4040FF" intensity={1.0}/>*/}
-
-                {/* For Portals, Wall light? */}
-                {/*<rectAreaLight color="#FFFFFF" intensity={1.0}*/}
-                {/*               width={20.0} height={20.0}*/}
-                {/*               position={[0, 10, 0]}/>*/}
-
-                {/* Main source of Light(Sun)... */}
-                <DirectionalLight/>
-
-                {/*<mesh position={[0, 40, 0]} scale={[2, 2, 2]}>*/}
-                {/*    <Box />*/}
-                {/*     For lamps, explosions, ... . Dont have a specific direction */}
-                {/*    <pointLight color="#FFFFFF" intensity={1.0} distance={100} position={[0, -2, 0]}/>*/}
-                {/*</mesh>*/}
-
-                {/* Have specific pos and direction (like a flashlight) */}
-                {/*<spotLight color="#FFFFFF" intensity={1.0}*/}
-                {/*           distance={2000.0} angle={Math.PI / 2.0}*/}
-                {/*           penumbra={0.5} decay={0.3}*/}
-                {/*           position={[5, 12, 0]} target-position={[-1, 0, 0]} />*/}
-
-
-                <OrbitControls/>
-                <SceneBackground/>
-                <Plane/>
-                {/*<Fog/>*/}
-
-                {/*{boxCoords.map((pos, ind) =>*/}
-                {/*    <Box key={ind} position={pos}/>*/}
-                {/*)}*/}
-                <Suspense fallback={null}>
-                    <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
-                    {/*<ZombieModel/>*/}
-                    {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
-                </Suspense>
-
-                <Box position={[0, 10, 0]} args={[5, 2, 2]}/>
-
-                {/*<ShadersTest/>*/}
-                {/*<Draggable>*/}
-                {/*    <Suspense fallback={null}>*/}
-                {/*        <Box rotateX={3} rotateY={0.2}/>*/}
-                {/*    </Suspense>*/}
-                {/*</Draggable>*/}
-
-                <UI3D />
-                <Stats />
-                {/*<PostProcessing/>*/}
-            </Physics>
+                }}>
+                <Physics>
+                    {/* Just adds additional Light to the scene */}
+                    <AmbientLight/>
+            
+                    {/* Different Colors for Top and Bottom */}
+                    {/*<hemisphereLight color="#FFFF80" groundColor="#4040FF" intensity={1.0}/>*/}
+            
+                    {/* For Portals, Wall light? */}
+                    {/*<rectAreaLight color="#FFFFFF" intensity={1.0}*/}
+                    {/*               width={20.0} height={20.0}*/}
+                    {/*               position={[0, 10, 0]}/>*/}
+            
+                    {/* Main source of Light(Sun)... */}
+                    <DirectionalLight/>
+            
+                    {/*<mesh position={[0, 40, 0]} scale={[2, 2, 2]}>*/}
+                    {/*    <Box />*/}
+                    {/*     For lamps, explosions, ... . Dont have a specific direction */}
+                    {/*    <pointLight color="#FFFFFF" intensity={1.0} distance={100} position={[0, -2, 0]}/>*/}
+                    {/*</mesh>*/}
+            
+                    {/* Have specific pos and direction (like a flashlight) */}
+                    {/*<spotLight color="#FFFFFF" intensity={1.0}*/}
+                    {/*           distance={2000.0} angle={Math.PI / 2.0}*/}
+                    {/*           penumbra={0.5} decay={0.3}*/}
+                    {/*           position={[5, 12, 0]} target-position={[-1, 0, 0]} />*/}
+            
+            
+                    {/*<OrbitControls/>*/}
+                    <SceneBackground/>
+                    <Plane/>
+                    {/*<Fog/>*/}
+            
+                    {/*{boxCoords.map((pos, ind) =>*/}
+                    {/*    <Box key={ind} position={pos}/>*/}
+                    {/*)}*/}
+                    <Suspense fallback={null}>
+                        <RocketModel scale={[2, 2, 2]} position={[400, 140, 0]}/>
+                        <ZombieModel/>
+                        {/*<AdventureCoreModel scale={[0.01, 0.01, 0.01]} />*/}
+                    </Suspense>
+            
+                    <Box position={[0, 10, 0]} args={[5, 2, 2]}/>
+            
+                    {/*<ShadersTest/>*/}
+                    {/*<Draggable>*/}
+                    {/*    <Suspense fallback={null}>*/}
+                    {/*        <Box rotateX={3} rotateY={0.2}/>*/}
+                    {/*    </Suspense>*/}
+                    {/*</Draggable>*/}
+            
+                    <LogicTestingSpace/>
+                    <Stats/>
+                    {/*<PostProcessing/>*/}
+                </Physics>
             </Canvas>
         </main>
         </>
-    )
-}
+    );
+};
