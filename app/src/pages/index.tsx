@@ -24,6 +24,7 @@ import ShadersTest from "@/features/core/components/ShadersTest";
 import Fog from "@/features/core/components/Fog";
 import {Physics} from "@react-three/cannon";
 import FirstPersonCamera from "@/features/core/components/FirstPersonCamera";
+import Audio from "@/features/core/components/Audio";
 import UI from "@/features/playground/components/UI";
 
 
@@ -105,6 +106,7 @@ export default function Home() {
             
                     <LogicTestingSpace/>
                     <Stats/>
+                    <Audio/>
                     {/*<PostProcessing/>*/}
                 </Physics>
             </Canvas>

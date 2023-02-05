@@ -47,7 +47,6 @@ class InputController {
         document.addEventListener('mousemove', (e) => this.onMouseMove_(e),false);
         document.addEventListener('keydown', (e) => this.onKeyDown_(e),false);
         document.addEventListener('keyup', (e) => this.onKeyUp_(e),false);
-        document.addEventListener('mouse', (e) => this.onKeyUp_(e),false);
     };
 
     private onMouseMove_(e: MouseEvent) {
