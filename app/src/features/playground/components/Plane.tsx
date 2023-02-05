@@ -5,7 +5,8 @@ import {usePlane} from "@react-three/cannon";
 const Plane = (props: any) => {
     const [planeRef]: any = usePlane(() => ({
         rotation: [-Math.PI / 2, 0, 0],
-        ...props
+        ...props,
+        position: [0, -5, 0]
     }));
 
     return (

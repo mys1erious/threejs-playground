@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from "react";
-import {useFBX, useAnimations} from "@react-three/drei";
+import {useFBX, useAnimations, FirstPersonControls} from "@react-three/drei";
 import {useFrame, useThree} from "@react-three/fiber";
 import {Quaternion, Vector3} from "three";
 import {
@@ -7,6 +7,8 @@ import {
     CharacterFSM
 } from "@/features/core/components/BasicCharacterController";
 import ThirdPersonCamera from "@/features/core/components/ThirdPersonCamera";
+import {File} from "next/dist/compiled/@edge-runtime/primitives/fetch";
+import FirstPersonCamera from "@/features/core/components/FirstPersonCamera";
 
 
 const DIR_PATH = 'models/zombie/';
@@ -42,7 +44,7 @@ export default function ZombieModel() {
     const {actions} = useAnimations(animations, groupRef);
 
     const fsm = new CharacterFSM({});
-    const input = new BasicCharacterControllerInput();
+    // const input = new BasicCharacterControllerInput();
 
     const _decceleration = new Vector3(-0.0005, -0.0001, -5.0);
     const _acceleration = new Vector3(1, 0.25, 50.0);
@@ -133,10 +135,10 @@ export default function ZombieModel() {
         oldPosition.copy(controlObject.position);
     }
 
-    useFrame((state, delta) => {
-        // fsm.update(delta, input);
-        update(delta);
-    })
+    // useFrame((state, delta) => {
+    //     // fsm.update(delta, input);
+    //     update(delta);
+    // })
 
     if (!model) return <mesh></mesh>
 
@@ -147,6 +149,7 @@ export default function ZombieModel() {
                 // onClick={onClick}
             />
             {/*<ThirdPersonCamera camera={camera} target={model}/>*/}
+            <FirstPersonCamera/>
         </group>
     );
 
