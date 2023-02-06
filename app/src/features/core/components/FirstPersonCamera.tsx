@@ -1,8 +1,19 @@
 import React from "react";
-import {useFrame, useThree} from "@react-three/fiber";
-import {Quaternion, Vector3} from "three";
+import {useFrame, useLoader, useThree} from "@react-three/fiber";
+import {
+    Euler,
+    Matrix4,
+    Mesh,
+    MeshStandardMaterial,
+    Object3D,
+    Quaternion,
+    Raycaster,
+    TextureLoader,
+    Vector3
+} from "three";
 import {clamp} from "@/features/core/utils/utils";
 import {KEYS} from "eslint-visitor-keys";
+import {DecalGeometry} from "three/examples/jsm/geometries/DecalGeometry";
 
 
 class InputController {
@@ -113,12 +124,16 @@ class InputController {
         // @ts-ignore
         return !!this.keys_[key];
     };
+
+    isReady() {
+        return this.previous_ !== null;
+    }
 }
 
 
 
 const FirstPersonCamera = () => {
-    const {camera} = useThree();
+    const {camera, scene} = useThree();
     const input = new InputController();
 
     const rotation = new Quaternion();
@@ -136,11 +151,54 @@ const FirstPersonCamera = () => {
     });
 
     const update = (timeElapsed: number) => {
-        updateRotation(timeElapsed);
-        updateCamera(timeElapsed);
-        updateTranslation(timeElapsed);
-        updateHeadBob(timeElapsed);
+        if (input.isReady()) {
+            updateRotation(timeElapsed);
+            updateCamera(timeElapsed);
+            updateTranslation(timeElapsed);
+            updateHeadBob(timeElapsed);
+            updateDecals();
+        }
+
         input.update(timeElapsed);
+    };
+
+    const updateDecals = () => {
+        if (!input.current_.leftButton && input.previous_?.leftButton) {
+            const raycaster = new Raycaster();
+            const pos = {x: 0, y: 0};
+
+            raycaster.setFromCamera(pos, camera);
+            const hits = raycaster.intersectObjects(scene.children);
+
+            if (!hits.length) return;
+
+            const position = hits[0].point.clone();
+            const eye = position.clone();
+            // @ts-ignore
+            eye.add(hits[0].face.normal);
+
+            const rotation = new Matrix4();
+            rotation.lookAt(eye, position, Object3D.DefaultUp);
+            const euler = new Euler();
+            euler.setFromRotationMatrix(rotation);
+
+            const decalTexture = useLoader(TextureLoader, 'images/decal.png');
+
+            const decalGeometry = new DecalGeometry(
+                hits[0].object as Mesh, hits[0].point, euler, new Vector3(1, 1, 1)
+            );
+            const decalMaterial = new MeshStandardMaterial({
+                map: decalTexture, // color: 0xFFFFFF,
+                transparent: true,
+                depthTest: true,
+                depthWrite: false,
+                polygonOffset: true,
+                polygonOffsetFactor: -4
+            });
+            const decal = new Mesh(decalGeometry, decalMaterial);
+            decal.receiveShadow = true;
+            scene.add(decal);
+        }
     };
 
     const updateRotation = (timeElapsed: number) => {
